@@ -18,13 +18,13 @@
  */
 package jchess.core;
 
-import jchess.core.pieces.implementation.King;
-import jchess.core.pieces.implementation.Knight;
-import jchess.core.pieces.implementation.Queen;
-import jchess.core.pieces.implementation.Rook;
-import jchess.core.pieces.implementation.Pawn;
-import jchess.core.pieces.implementation.Bishop;
+import Factory.*;
 import jchess.core.pieces.Piece;
+import jchess.core.pieces.PieceType;
+import jchess.core.pieces.implementation.King;
+import jchess.core.pieces.implementation.Pawn;
+import jchess.core.pieces.implementation.Rook;
+
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.Set;
@@ -60,6 +60,8 @@ public class Chessboard
     private Set<Square> moves;
     
     private Settings settings;
+    
+    private ConcreteFactory pieceFactory;
     
     protected King kingWhite;
     
@@ -105,6 +107,8 @@ public class Chessboard
             }
         }//--endOf--create object for each square
         this.Moves = Moves;
+        
+        this.setPieceFactory(new ConcreteFactory(this));
 
     }/*--endOf-Chessboard--*/
 
@@ -175,23 +179,24 @@ public class Chessboard
             player.goDown = true;
         }
 
-        this.getSquare(0, i).setPiece(new Rook(this, player));
-        this.getSquare(7, i).setPiece(new Rook(this, player));
-        this.getSquare(1, i).setPiece(new Knight(this, player));
-        this.getSquare(6, i).setPiece(new Knight(this, player));
-        this.getSquare(2, i).setPiece(new Bishop(this, player));
-        this.getSquare(5, i).setPiece(new Bishop(this, player));
-        
+        /*New : Creation of the Pieces with Factory Pattern */
+        this.getSquare(0, i).setPiece(getPieceFactory().createPiece(PieceType.Rook, player));
+        this.getSquare(7, i).setPiece(getPieceFactory().createPiece(PieceType.Rook, player));
+        this.getSquare(1, i).setPiece(getPieceFactory().createPiece(PieceType.Knight, player));
+        this.getSquare(6, i).setPiece(getPieceFactory().createPiece(PieceType.Knight, player));       
+        this.getSquare(2, i).setPiece(getPieceFactory().createPiece(PieceType.Bishop, player));
+        this.getSquare(5, i).setPiece(getPieceFactory().createPiece(PieceType.Bishop, player));
+        this.getSquare(3, i).setPiece(getPieceFactory().createPiece(PieceType.Bishop, player));
 
-        this.getSquare(3, i).setPiece(new Queen(this, player));
+
         if (player.getColor() == Colors.WHITE)
         {
-            kingWhite = new King(this, player);
+            kingWhite = (King)getPieceFactory().createPiece(PieceType.King, player);
             this.getSquare(4, i).setPiece(kingWhite);
         }
         else
         {
-            kingBlack = new King(this, player);
+            kingBlack = (King)getPieceFactory().createPiece(PieceType.King, player);
             this.getSquare(4, i).setPiece(kingBlack);
         }
     }
@@ -209,7 +214,7 @@ public class Chessboard
         }
         for (int x = 0; x < 8; x++)
         {
-            this.getSquare(x, i).setPiece(new Pawn(this, player));
+            this.getSquare(x, i).setPiece(getPieceFactory().createPiece(PieceType.Pawn, player));
         }
     }
     
@@ -352,16 +357,16 @@ public class Chessboard
                     switch (newPiece)
                     {
                         case "Queen":
-                            piece = new Queen(this, end.getPiece().getPlayer());
+                            piece = getPieceFactory().createPiece(PieceType.Queen, end.getPiece().getPlayer());
                             break;
                         case "Rook":
-                            piece = new Rook(this, end.getPiece().getPlayer());
+                            piece = getPieceFactory().createPiece(PieceType.Rook, end.getPiece().getPlayer());
                             break;
                         case "Bishop":
-                            piece = new Bishop(this, end.getPiece().getPlayer());
+                            piece = getPieceFactory().createPiece(PieceType.Bishop, end.getPiece().getPlayer());
                             break;
                         default:
-                            piece = new Knight(this, end.getPiece().getPlayer());
+                            piece = getPieceFactory().createPiece(PieceType.Knight, end.getPiece().getPlayer());
                             break;
                     }
                     piece.setChessboard(end.getPiece().getChessboard());
@@ -376,13 +381,11 @@ public class Chessboard
         {
             twoSquareMovedPawn = null; //erase last saved move (for En passant)
         }
-
         if (refresh)
         {
             this.unselect();//unselect square
             repaint();
         }
-
         if (clearForwardHistory)
         {
             this.Moves.clearMoveForwardStack();
@@ -715,4 +718,12 @@ public class Chessboard
     {
         this.activeSquareY = activeSquareY;
     }
+
+	public ConcreteFactory getPieceFactory() {
+		return pieceFactory;
+	}
+
+	public void setPieceFactory(ConcreteFactory pieceFactory) {
+		this.pieceFactory = pieceFactory;
+	}
 }
