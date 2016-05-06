@@ -177,8 +177,7 @@ public class Moves extends AbstractTableModel
 
     public void addMove(Square begin, Square end, boolean registerInHistory, Castling castlingMove, boolean wasEnPassant, Piece promotedPiece)
     {
-        boolean wasCastling = castlingMove != Castling.NONE;
-        String locMove = begin.getPiece().getSymbol();
+        String locMove =  begin.getPiece().getSymbol();
         
         if( game.getSettings().isUpsideDown() )
         {

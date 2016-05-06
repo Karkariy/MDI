@@ -13,6 +13,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import jchess.JChessApp;
 import jchess.core.Game;
 import jchess.utils.Settings;
 
@@ -102,9 +104,7 @@ public class LocalSettingsView extends JPanel implements ActionListener
     private void initTimeControl()
     {   
     	this.time4Game = new JComboBox(TIMES);
-    	
-        this.time4Game.setToolTipText(Settings.lang("Select Time"));     
-        
+        this.time4Game.setToolTipText(Settings.lang("Select Time"));          
         this.gbc.gridx = 0;
         this.gbc.gridy = 4;
         this.add(new JLabel("Select Time : "));
@@ -113,18 +113,18 @@ public class LocalSettingsView extends JPanel implements ActionListener
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				String value = TIMES[time4Game.getSelectedIndex()];//set time for game
 	            Integer val = new Integer(value);
 	            if(game.isFirstTurn()){
-	            game.getSettings().setTimeForGame((int) val* 60);//set time for game and mult it to seconds
-				game.getGameClock().setTimes(game.getSettings().getTimeForGame(),game.getSettings().getTimeForGame());			
+	            	game.getSettings().setTimeForGame((int) val* 60);//set time for game and mult it to seconds
+	            	game.getGameClock().setTimes(game.getSettings().getTimeForGame(),
+	            								 game.getSettings().getTimeForGame());			
+	            	
+	            	JChessApp.getJavaChessView().getActiveTabGame().updateUI();
 	            }
 			}
 		});
-    }
-    
-
+    }    
         
     private void refreshCheckBoxesState()
     {

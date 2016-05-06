@@ -69,20 +69,7 @@ public class Pawn extends Piece
     public Pawn(Chessboard chessboard, Player player)
     {
         super(chessboard, player);
-        this.symbol = "";
+        this.symbol = "P";
         this.behaviors.add(new PawnBehavior(this));
-    }
-
-    void promote(Piece newPiece)
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    /**
-     * @return the down
-     */
-    public boolean isDown()
-    {
-        return down;
     }
 }

@@ -32,7 +32,7 @@ public class Knight extends Piece
     public Knight(Chessboard chessboard, Player player)
     {
         super(chessboard, player);//call initializer of super type: Piece
-        this.symbol = "N";
+        this.symbol = "K";
         this.addBehavior(new KnightBehavior(this));
     }
     
