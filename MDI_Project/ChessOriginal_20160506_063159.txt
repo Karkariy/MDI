@@ -1,0 +1,16 @@
+ERROR - 06:31:59: org.xml.sax.SAXParseExceptionpublicId: /ChessOriginal/bin/jchess/utils/resources/GUI.properties; systemId: file:///ChessOriginal/bin/jchess/utils/resources/GUI.properties; lineNumber: 1; columnNumber: 1; Contenu non autorisé dans le prologue.
+ERROR - 06:31:59: org.xml.sax.SAXParseExceptionpublicId: /ChessOriginal/bin/jchess/utils/resources/GUI.properties; systemId: file:///ChessOriginal/bin/jchess/utils/resources/GUI.properties; lineNumber: 1; columnNumber: 1; Contenu non autorisé dans le prologue.
+WARNING - 06:32:03: Convert ChessOriginal
+ERROR - 06:32:03: org.xml.sax.SAXParseExceptionpublicId: /ChessOriginal/bin/jchess/utils/resources/GUI.properties; systemId: file:///ChessOriginal/bin/jchess/utils/resources/GUI.properties; lineNumber: 1; columnNumber: 1; Contenu non autorisé dans le prologue.
+ERROR - 06:32:03: org.xml.sax.SAXParseExceptionpublicId: /ChessOriginal/bin/jchess/utils/resources/GUI.properties; systemId: file:///ChessOriginal/bin/jchess/utils/resources/GUI.properties; lineNumber: 1; columnNumber: 1; Contenu non autorisé dans le prologue.
+WARNING - 06:32:20: Convert ChessOriginal
+ERROR - 06:32:20: org.xml.sax.SAXParseExceptionpublicId: /ChessOriginal/src/jchess/display/windows/DrawLocalSettings.java; systemId: file:///ChessOriginal/src/jchess/display/windows/DrawLocalSettings.java; lineNumber: 1; columnNumber: 1; Contenu non autorisé dans le prologue.
+ERROR - 06:32:20: org.xml.sax.SAXParseExceptionpublicId: /ChessOriginal/src/jchess/display/windows/DrawLocalSettings.java; systemId: file:///ChessOriginal/src/jchess/display/windows/DrawLocalSettings.java; lineNumber: 1; columnNumber: 1; Contenu non autorisé dans le prologue.
+WARNING - 06:32:24: Convert ChessOriginal
+ERROR - 06:32:24: org.eclipse.emf.ecore.xmi.PackageNotFoundException: Package with uri 'null' not found. (file:///ChessOriginal/src/jchess/display/windows/JChessAboutBox.form, 3, 96)
+ERROR - 06:32:24: org.eclipse.emf.ecore.xmi.PackageNotFoundException: Package with uri 'null' not found. (file:///ChessOriginal/src/jchess/display/windows/JChessAboutBox.form, 3, 96)
+WARNING - 06:32:32: Convert ChessOriginal
+ERROR - 06:32:32: org.xml.sax.SAXParseExceptionpublicId: /ChessOriginal/src/jchess/display/windows/JChessAboutBox.java; systemId: file:///ChessOriginal/src/jchess/display/windows/JChessAboutBox.java; lineNumber: 1; columnNumber: 1; Contenu non autorisé dans le prologue.
+ERROR - 06:32:32: org.xml.sax.SAXParseExceptionpublicId: /ChessOriginal/src/jchess/display/windows/JChessAboutBox.java; systemId: file:///ChessOriginal/src/jchess/display/windows/JChessAboutBox.java; lineNumber: 1; columnNumber: 1; Contenu non autorisé dans le prologue.
+ERROR - 06:32:57: org.xml.sax.SAXParseExceptionpublicId: /ChessOriginal/src/jchess/display/windows/DrawLocalSettings.java; systemId: file:///ChessOriginal/src/jchess/display/windows/DrawLocalSettings.java; lineNumber: 1; columnNumber: 1; Contenu non autorisé dans le prologue.
+ERROR - 06:32:57: org.xml.sax.SAXParseExceptionpublicId: /ChessOriginal/src/jchess/display/windows/DrawLocalSettings.java; systemId: file:///ChessOriginal/src/jchess/display/windows/DrawLocalSettings.java; lineNumber: 1; columnNumber: 1; Contenu non autorisé dans le prologue.
