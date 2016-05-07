@@ -33,6 +33,7 @@ import jchess.core.Square;
 import jchess.core.pieces.traits.behaviors.Behavior;
 import org.apache.log4j.Logger;
 
+
 /**
  * @author : Mateusz Sławomir Lach ( matlak, msl )
  * @author : Damian Marciniak
@@ -40,6 +41,7 @@ import org.apache.log4j.Logger;
  */
 public abstract class Piece
 {
+
 
     private static final Logger LOG = Logger.getLogger(Piece.class);
     

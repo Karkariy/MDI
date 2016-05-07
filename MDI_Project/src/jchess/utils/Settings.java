@@ -48,7 +48,7 @@ public class Settings implements Serializable
      */
     protected boolean timeLimitSet = false;
     
-    protected boolean upsideDown;
+    protected boolean upsideDown ;
     
     protected boolean displayLegalMovesEnabled = true;
 
