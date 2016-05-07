@@ -67,6 +67,10 @@ public class Chessboard
     
     protected King kingBlack;
     
+    private int chessBordSizeM = 8;
+
+	private int chessBordSizeN = 8;
+    
     //For En passant:
     //|-> Pawn whose in last turn moved two square
     protected Pawn twoSquareMovedPawn = null;
@@ -91,6 +95,9 @@ public class Chessboard
      */
     public Chessboard(Settings settings, Moves Moves)
     {
+    	
+    	
+    	
         this.settings = settings;
         this.chessboardView = new Chessboard2D(this);
 
@@ -186,7 +193,7 @@ public class Chessboard
         this.getSquare(6, i).setPiece(getPieceFactory().createPiece(PieceType.Knight, player));       
         this.getSquare(2, i).setPiece(getPieceFactory().createPiece(PieceType.Bishop, player));
         this.getSquare(5, i).setPiece(getPieceFactory().createPiece(PieceType.Bishop, player));
-        this.getSquare(3, i).setPiece(getPieceFactory().createPiece(PieceType.Bishop, player));
+        this.getSquare(3, i).setPiece(getPieceFactory().createPiece(PieceType.Queen, player));
 
 
         if (player.getColor() == Colors.WHITE)
@@ -725,5 +732,21 @@ public class Chessboard
 
 	public void setPieceFactory(ConcreteFactory pieceFactory) {
 		this.pieceFactory = pieceFactory;
+	}
+
+	public int getChessBordSizeM() {
+		return chessBordSizeM;
+	}
+
+	public void setChessBordSizeM(int chessBordSizeM) {
+		this.chessBordSizeM = chessBordSizeM;
+	}
+
+	public int getChessBordSizeN() {
+		return chessBordSizeN;
+	}
+
+	public void setChessBordSizeN(int chessBordSizeN) {
+		this.chessBordSizeN = chessBordSizeN;
 	}
 }

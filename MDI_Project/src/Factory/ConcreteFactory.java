@@ -4,8 +4,10 @@ import jchess.core.Chessboard;
 import jchess.core.Player;
 import jchess.core.pieces.*;
 import jchess.core.pieces.implementation.*;
+
 public class ConcreteFactory {
 
+	
 	
 	private Chessboard chessboard;
 	

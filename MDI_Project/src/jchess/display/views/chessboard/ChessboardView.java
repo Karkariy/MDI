@@ -67,7 +67,7 @@ public abstract class ChessboardView extends JPanel
     /*
      * image x position (used in JChessView class!)
      */
-    public static final int imgX = 5; 
+    public static final int imgX = 45; 
     
     /*
      * image y position (used in JChessView class!)
@@ -77,7 +77,7 @@ public abstract class ChessboardView extends JPanel
     /*
      * image width
      */
-    public static final int imgWidht = 480;
+    public static final int imgWidht = 250;
     
     /*
      * image height

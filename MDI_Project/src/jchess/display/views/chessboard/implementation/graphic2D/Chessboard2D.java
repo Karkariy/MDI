@@ -27,6 +27,8 @@ import org.apache.log4j.Logger;
 public class Chessboard2D extends ChessboardView 
 {
     private static final Logger LOG = Logger.getLogger(Chessboard2D.class);
+
+
     
     protected Pieces2D pieces2D = Pieces2D.getInstance();
     
@@ -254,11 +256,11 @@ public class Chessboard2D extends ChessboardView
 
         String[] letters =
         {
-            "a", "b", "c", "d", "e", "f", "g", "h"
+            "a", "b", "c", "d", "e", "f", "g", "h","i","j","k","l","m","n"
         };
         if (!getChessboard().getSettings().isUpsideDown())
         {
-            for (int i = 1; i <= letters.length; i++)
+            for (int i = 1; i <= getChessboard().getChessBordSizeN(); i++)
             {
                 uDL2D.drawString(letters[i - 1], (squareHeight * (i - 1)) + addX, 10 + (labelHeight / 3));
             }
@@ -266,7 +268,7 @@ public class Chessboard2D extends ChessboardView
         else
         {
             int j = 1;
-            for (int i = letters.length; i > 0; i--, j++)
+            for (int i = getChessboard().getChessBordSizeN(); i > 0; i--, j++)
             {
                 uDL2D.drawString(letters[i - 1], (squareHeight * (j - 1)) + addX, 10 + (labelHeight / 3));
             }
@@ -293,7 +295,7 @@ public class Chessboard2D extends ChessboardView
         else
         {
             int j = 1;
-            for (int i = 8; i > 0; i--, j++)
+            for (int i = getChessboard().getChessBordSizeM(); i > 0; i--, j++)
             {
                 uDL2D.drawString(new Integer(i).toString(), 3 + (labelHeight / 3), (squareHeight * (j - 1)) + addX);
             }
@@ -352,9 +354,9 @@ public class Chessboard2D extends ChessboardView
 
     private void drawPieces(Square[][] squares, Graphics2D g2d)
     {
-        for (int i = 0; i < 8; i++) //drawPiecesOnSquares
+        for (int i = 0; i < getChessboard().getChessBordSizeM(); i++) //drawPiecesOnSquares
         {
-            for (int y = 0; y < 8; y++)
+            for (int y = 0; y < getChessboard().getChessBordSizeN(); y++)
             {
                 if (squares[i][y].getPiece() != null)
                 {
