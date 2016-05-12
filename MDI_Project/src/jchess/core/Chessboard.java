@@ -19,6 +19,7 @@
 package jchess.core;
 
 import Factory.*;
+import Builder.*;
 import jchess.core.pieces.Piece;
 import jchess.core.pieces.PieceType;
 import jchess.core.pieces.implementation.King;
@@ -44,7 +45,7 @@ import org.apache.log4j.*;
  * It is setting the squers of chessboard and sets the pieces(pawns)
  * witch the owner is current player on it.
  */
-public class Chessboard 
+public class Chessboard implements Builder
 {
     private static final Logger LOG = Logger.getLogger(Chessboard.class);
     
@@ -287,7 +288,7 @@ public class Chessboard
 
     /** Method move piece from square to square
      * @param begin square from which move piece
-     * @param end square where we want to move piece         *
+     * @param end square where we want to move piece
      * @param refresh chessboard, default: true
      * */
     public void move(Square begin, Square end, boolean refresh, boolean clearForwardHistory)
@@ -748,5 +749,25 @@ public class Chessboard
 
 	public void setChessBordSizeN(int chessBordSizeN) {
 		this.chessBordSizeN = chessBordSizeN;
+	}
+
+	public Chessboard xFrom(int x) {
+		
+		return this;
+	}
+
+	public Chessboard yFrom(int y) {
+		
+		return this;
+	}
+
+	public Chessboard xTo(int x) {
+		
+		return this;
+	}
+
+	public Chessboard yTo(int y) {
+		
+		return this;
 	}
 }

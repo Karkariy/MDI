@@ -47,5 +47,4 @@ public class BishopBehavior extends LongRangePieceBehavior
         
         return list;
     }
-    
 }

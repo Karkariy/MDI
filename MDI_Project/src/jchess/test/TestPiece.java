@@ -47,12 +47,10 @@ public class TestPiece {
 
 
         // #2 bad API design
-        //  Moves moves = new Moves(g);
+        // Moves moves = new Moves(g);
         // Chessboard board = new Chessboard(settings, moves);
         // g.getChessboard() != board :(
         // board.getMoves() != moves :(
-
-
     }
 
     @Test
@@ -65,9 +63,7 @@ public class TestPiece {
 
     @Test
     public void testBasicMovement() throws Exception {
-
-
-        Square sq = board.getSquare(5, 1); // 1st rown (black relative)
+        Square sq = board.getSquare(5, 1); // 1st row (black relative)
         Piece p = sq.getPiece();
         assertTrue(p instanceof Pawn);
         assertEquals(Colors.BLACK, p.getPlayer().getColor());
@@ -98,16 +94,10 @@ public class TestPiece {
         Piece p4 = board.getSquare(4, 4).getPiece(); // and there is a pawn in e4
         assertTrue(p4 instanceof Pawn);
         assertEquals(Colors.WHITE, p4.getPlayer().getColor());
-
-
-
-
-
     }
 
     @Test
     public void testBishop1() throws Exception {
-
         // e2 (4, 6) e4 (5, 4)
         board.move(4, 6, 4, 4);
 
@@ -126,13 +116,10 @@ public class TestPiece {
         assertEquals(Colors.WHITE, b1.getPlayer().getColor());
 
         assertEquals(5, b1.getAllMoves().size());
-
-
     }
 
     @Test
     public void testBishop2() throws Exception {
-
         // d2 (3, 6) d4 (3, 4)
         board.move(3, 6, 3, 4);
 
@@ -145,7 +132,27 @@ public class TestPiece {
         assertEquals(Colors.WHITE, b1.getPlayer().getColor());
 
         assertEquals(5, b1.getAllMoves().size());
+    }
+    
+    @Test
+    public void testKing() throws Exception {
+    	// d2 (3, 6) d4 (3, 4)
+        board.move(3, 6, 3, 4);
+    	
+        // c7 (2, 1) c5 (4, 3)
+        board.move(2, 1, 2, 3);
+        
+        // e1 (4, 8) d2 (3, 7)
+        board.move(4, 7, 3, 6);
+    	
+        // d8 (3, 0) a5 (0, 3)
+        board.move(3, 0, 0, 3);
+    	
+        // king in d2
+        Piece k1 = board.getSquare(3, 6).getPiece();
+        assertTrue(k1 instanceof King);
+        assertEquals(Colors.WHITE, k1.getPlayer().getColor());
 
-
+        assertEquals(2, k1.getAllMoves().size());
     }
 }

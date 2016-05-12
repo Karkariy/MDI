@@ -34,10 +34,10 @@ public class Square
      * Y position of square
      * 0-7, because 8 squares for row/column
      */
-    protected int pozY; // 0-7, becouse 8 squares for row/column
+    protected int pozY; // 0-7, because 8 squares for row/column
     
     /**
-     * object Piece on square (and extending Piecie)
+     * object Piece on square (and extending Piece)
      */
     public Piece piece = null;
 
