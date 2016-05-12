@@ -124,7 +124,7 @@ public class King extends Piece
                 {
                     if(piece.getPlayer().getColor() != this.getPlayer().getColor() && piece != this)
                     {
-                        if(piece.getSquaresInRange().contains(this.getSquare()))
+                        if(piece.getSquaresInRange().contains(s))
                         {
                             return false;
                         }
@@ -144,7 +144,7 @@ public class King extends Piece
         futureSquare.piece  = currentSquare.piece; // move without redraw
         currentSquare.piece = null;
 
-        boolean ret = isSafe(this.getSquare());
+        boolean ret = (futureSquare.piece == this)?isSafe(futureSquare):isSafe(this.getSquare());
 
         currentSquare.piece = futureSquare.piece;
         futureSquare.piece  = tmp;
