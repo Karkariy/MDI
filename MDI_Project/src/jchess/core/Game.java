@@ -42,6 +42,7 @@ import Visitor.VisitorM2;
 import Decorator.MovesWithTimeDecorator;
 
 import ChessEngine.ChessRandom;
+import ChessEngine.ChessGlouton;
 
 import java.io.IOException;
 import jchess.JChessApp;
@@ -85,7 +86,8 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 	 */
 	protected Player activePlayer;
 	
-	protected ChessRandom chessEngine;
+	protected ChessRandom chessEngineRandom;
+	protected ChessGlouton chessEngineGlouton;
 	
 	protected VisitorM1 visitor1;
 	protected VisitorM2 visitor2;
@@ -146,7 +148,8 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 				this.moves);
 		
 		displacement = new DisplacementBuilder(chessboard);
-		chessEngine = new ChessRandom(chessboard);
+		chessEngineRandom = new ChessRandom(chessboard);
+		chessEngineGlouton = new ChessGlouton(chessboard);
 		
 		visitor1 = new VisitorM1(chessboard);
 		visitor2 = new VisitorM2(chessboard);
@@ -417,8 +420,8 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 		else if (activePlayer.getPlayerType() == Player.playerTypes.computer)
 		{
 			this.blockedChessboard = true;
-			chessEngine.setColor(activePlayer.getColor());
-			if(chessEngine.play())
+			chessEngineGlouton.setColor(activePlayer.getColor());
+			if(chessEngineGlouton.play())
 			{
 				this.nextMove();
 			}	
