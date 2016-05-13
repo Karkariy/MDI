@@ -28,11 +28,11 @@ public class ChessboardDefaultStrategy extends Strategy {
             	chessboard.getSquares()[i][y] = new Square(i, y, null);
             }
         }
-		this.setFigures4NewGame(chessboard,0, plBlack);
-		this.setFigures4NewGame(chessboard,chessboard.getChessBordSizeH()-1, plWhite);
+		setFigures4NewGame(chessboard,0, plBlack);
+		setFigures4NewGame(chessboard,chessboard.getChessBordSizeH()-1, plWhite);
 	}
 
-	private void setFigures4NewGame(Chessboard chessboard,int i, Player player) {
+	protected void setFigures4NewGame(Chessboard chessboard,int i, Player player) {
 		int posPawn =0;
 		if (i == 0)
 		{

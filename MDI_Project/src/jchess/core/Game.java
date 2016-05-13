@@ -30,8 +30,8 @@ import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import org.apache.log4j.Logger;
 
-import Strategy.ChessBoardRandStrategy;
 import Strategy.ChessboardDefaultStrategy;
+import Strategy.ChessboardRandStrategy;
 import Strategy.EContexte;
 
 import java.io.IOException;
@@ -111,7 +111,7 @@ public class Game extends JPanel implements ComponentListener, MouseListener
         this.setLayout(null);
         this.moves = new Moves(this);
         settings = new Settings();
-        chessboard = new Chessboard(this.getSettings(),new EContexte(new ChessBoardRandStrategy(), 
+        chessboard = new Chessboard(this.getSettings(),new EContexte(new ChessboardRandStrategy(), 
         						    getSettings().getPlayerWhite(),getSettings().getPlayerBlack()),
         							this.moves);
         
