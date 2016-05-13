@@ -37,7 +37,7 @@ import jchess.core.Colors;
  */
 public class GUI
 {
-
+	
     private static final Logger LOG = Logger.getLogger(GUI.class);
     
     private static final String CONFIG_FILENAME = "config.txt";
