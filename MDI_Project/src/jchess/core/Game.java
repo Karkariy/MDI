@@ -71,7 +71,7 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 	 * chessboard data object
 	 */    
 	protected Chessboard chessboard;
-
+	protected DisplacementBuilder displacement;
 
 	/**
 	 * Currently active player object
@@ -129,9 +129,11 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 		this.add(Moves);
 
 
-		chessboard = new Chessboard(this.getSettings(),new EContexte(new ChessboardCustomStrategy(height,width), 
+		chessboard = new Chessboard(this.getSettings(),new EContexte(new ChessboardDefaultStrategy(), 
 				getSettings().getPlayerWhite(),getSettings().getPlayerBlack()),
 				this.moves);
+		displacement = new DisplacementBuilder(chessboard);
+		
 		ChessboardView chessboardView = chessboard.getChessboardView();
 		int chessboardWidth = chessboardView.getChessboardWidht(true);
 		this.add(chessboardView);
@@ -571,7 +573,11 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 					{
 						if (getSettings().getGameType() == Settings.gameTypes.local)
 						{
-							getChessboard().move(getChessboard().getActiveSquare(), sq);
+							// getChessboard().move(getChessboard().getActiveSquare(), sq);
+							
+							/* Use Design Pattern Builder */
+							Square sqFrom = getChessboard().getActiveSquare();
+							displacement.xFrom(sqFrom.pozX).yFrom(sqFrom.pozY).xTo(sq.pozX).yTo(sq.pozY);
 						}
 
 
