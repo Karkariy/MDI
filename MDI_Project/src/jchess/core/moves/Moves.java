@@ -50,7 +50,7 @@ public class Moves extends AbstractTableModel
 {
     private static final Logger LOG = Logger.getLogger(Moves.class);
     
-    private ArrayList<String> move = new ArrayList<String>();
+    protected ArrayList<String> move = new ArrayList<String>();
     private int columnsNum = 3;
     private int rowsNum = 0;
     private String[] names = new String[]
@@ -58,10 +58,10 @@ public class Moves extends AbstractTableModel
         Settings.lang("white"), Settings.lang("black")
     };
     private MyDefaultTableModel tableModel;
-    private JScrollPane scrollPane;
+    protected JScrollPane scrollPane;
     private JTable table;
-    private boolean enterBlack = false;
-    private Game game;
+    protected boolean enterBlack = false;
+    protected Game game;
     protected Stack<Move> moveBackStack = new Stack<Move>();
     protected Stack<Move> moveForwardStack = new Stack<Move>();
 
@@ -86,6 +86,16 @@ public class Moves extends AbstractTableModel
     {
     }
 
+    public Game getGame()
+    {
+    	return this.game;
+    }
+    
+    public ArrayList<String> getMove()
+    {
+    	return this.move;
+    }
+    
     @Override
     public String getValueAt(int x, int y)
     {

@@ -36,6 +36,10 @@ public class GameClock extends JPanel implements Runnable
     public Clock clock1;
     public Clock clock2;
     private Clock runningClock;
+    
+    public int beginStrokeTimeClock1;
+    public int beginStrokeTimeClock2;
+    
     private Settings settings;
     private Thread thread;
     private Game game;
@@ -171,14 +175,17 @@ public class GameClock extends JPanel implements Runnable
      */
     public void switchClocks()
     {
+    	int leftActivePlayerTime = this.runningClock.getLeftTime(); 
         /*in documentation this method is called 'switch', but it's restricted name
         to switch block (in pascal called "case") - this've to be repaired in documentation by Wąsu:P*/
         if (this.runningClock == this.clock1)
         {
+        	this.beginStrokeTimeClock1 = leftActivePlayerTime;
             this.runningClock = this.clock2;
         }
         else
         {
+        	this.beginStrokeTimeClock2 = leftActivePlayerTime;
             this.runningClock = this.clock1;
         }
     }
@@ -192,7 +199,10 @@ public class GameClock extends JPanel implements Runnable
         /*rather in chess game players got the same time 4 game, so why in documentation
          * this method've 2 parameters ? */
         this.clock1.init(t1);
+        this.beginStrokeTimeClock1 = t1;
+
         this.clock2.init(t2);
+        this.beginStrokeTimeClock2 = t2;
     }
 
     /** Method with is setting the players clocks

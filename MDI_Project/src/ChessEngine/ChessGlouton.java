@@ -23,6 +23,7 @@ public class ChessGlouton extends ChessEngine {
 		ArrayList<Piece> pieceList = this.m_chessboard.getAllPieces(this.m_color);
 		
 		
+		
 		return true;
 	}
 

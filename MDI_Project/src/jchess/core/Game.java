@@ -39,6 +39,8 @@ import Builder.DisplacementBuilder;
 import Visitor.VisitorM1;
 import Visitor.VisitorM2;
 
+import Decorator.MovesWithTimeDecorator;
+
 import ChessEngine.ChessRandom;
 
 import java.io.IOException;
@@ -121,7 +123,7 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 	public Game()
 	{
 		this.setLayout(null);
-		this.moves = new Moves(this);
+		this.moves = new MovesWithTimeDecorator(new Moves(this));
 		settings = new Settings();
 		int height =5 , width = 5;
 
