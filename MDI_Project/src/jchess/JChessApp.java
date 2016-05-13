@@ -77,6 +77,7 @@ public class JChessApp extends SingleFrameApplication {
 	      sb.append( AB.charAt( rnd.nextInt(AB.length()) ) );
 	   return sb.toString();
     }
+    
     private void createGame() {
     	 String name1 = randomName() + "_White";
          String name2 = randomName() + "_Black";
@@ -92,8 +93,11 @@ public class JChessApp extends SingleFrameApplication {
          pl2.setName(name2);//set name of player
          
 
+         // Player Local | Network | Computer
          pl1.setType(Player.playerTypes.localUser);//set type of player
-         pl2.setType(Player.playerTypes.localUser);//set type of player
+         pl2.setType(Player.playerTypes.computer);//set type of player
+         
+         
          sett.setGameType(Settings.gameTypes.local);
          newGUI.getGameClock().setTimes(60, 60);       
          

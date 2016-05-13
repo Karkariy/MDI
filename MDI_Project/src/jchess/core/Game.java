@@ -39,6 +39,8 @@ import Builder.DisplacementBuilder;
 import Visitor.VisitorM1;
 import Visitor.VisitorM2;
 
+import ChessEngine.ChessRandom;
+
 import java.io.IOException;
 import jchess.JChessApp;
 import jchess.core.moves.Moves;
@@ -80,6 +82,9 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 	 * Currently active player object
 	 */
 	protected Player activePlayer;
+	
+	protected ChessRandom chessEngine;
+	
 	protected VisitorM1 visitor1;
 	protected VisitorM2 visitor2;
 
@@ -139,6 +144,8 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 				this.moves);
 		
 		displacement = new DisplacementBuilder(chessboard);
+		chessEngine = new ChessRandom(chessboard);
+		
 		visitor1 = new VisitorM1(chessboard);
 		visitor2 = new VisitorM2(chessboard);
 		
@@ -350,6 +357,7 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 	public void endGame(String message)
 	{
 		this.blockedChessboard = true;
+		this.getGameClock().stop();
 		LOG.debug(message);
 		JOptionPane.showMessageDialog(null, message);
 	}
@@ -406,6 +414,12 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 		}
 		else if (activePlayer.getPlayerType() == Player.playerTypes.computer)
 		{
+			this.blockedChessboard = true;
+			chessEngine.setColor(activePlayer.getColor());
+			if(chessEngine.play())
+			{
+				this.nextMove();
+			}	
 		}
 	}
 
@@ -552,7 +566,6 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 		}
 		else if (event.getButton() == MouseEvent.BUTTON1) //left button
 		{
-
 			if (!isChessboardBlocked())
 			{
 				if(isFirstTurn){
