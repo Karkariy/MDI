@@ -41,8 +41,6 @@ import org.apache.log4j.Logger;
  */
 public abstract class Piece
 {
-
-
     private static final Logger LOG = Logger.getLogger(Piece.class);
     
     protected Chessboard chessboard; // <-- this relations isn't in class diagram, but it's necessary :/
@@ -55,7 +53,7 @@ public abstract class Piece
     
     protected String symbol;
     
-    protected static short value = 0;
+    protected short value = 0;
     
     protected Set<Behavior> behaviors = new HashSet<>();
 
@@ -73,7 +71,7 @@ public abstract class Piece
     /**
      * @return the value
      */
-    public static short getValue()
+    public short getValue()
     {
         return value;
     }        

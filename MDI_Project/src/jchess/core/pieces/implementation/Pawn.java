@@ -64,11 +64,10 @@ public class Pawn extends Piece
 {
     protected boolean down;
     
-    protected static short value = 1;
-    
     public Pawn(Chessboard chessboard, Player player)
     {
         super(chessboard, player);
+        this.value = 1;
         this.symbol = "P";
         this.behaviors.add(new PawnBehavior(this));
     }

@@ -41,12 +41,11 @@ import jchess.core.pieces.traits.behaviors.implementation.BishopBehavior;
  */
 public class Bishop extends Piece
 {
-    protected static final short value = 3;
-
     public Bishop(Chessboard chessboard, Player player)
     {
         super(chessboard, player); //call initializer of super type: Piece
+        this.value = 3;
         this.symbol = "B";
         this.addBehavior(new BishopBehavior(this));
-    }
+    } 
 }

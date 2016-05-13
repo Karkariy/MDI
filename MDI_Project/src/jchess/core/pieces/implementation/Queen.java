@@ -41,11 +41,10 @@ import jchess.core.pieces.traits.behaviors.implementation.RookBehavior;
  */
 public class Queen extends Piece
 {
-    protected static final short value = 9;
-
     public Queen(Chessboard chessboard, Player player)
     {
         super(chessboard, player);//call initializer of super type: Piece
+        this.value = 9;
         this.symbol = "Q";
         this.addBehavior(new RookBehavior(this));
         this.addBehavior(new BishopBehavior(this));

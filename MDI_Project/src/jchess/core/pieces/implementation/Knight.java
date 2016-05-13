@@ -27,11 +27,10 @@ import jchess.core.pieces.traits.behaviors.implementation.KnightBehavior;
  */
 public class Knight extends Piece
 {
-    protected static final short value = 3;
-
     public Knight(Chessboard chessboard, Player player)
     {
         super(chessboard, player);//call initializer of super type: Piece
+        this.value = 3;
         this.symbol = "K";
         this.addBehavior(new KnightBehavior(this));
     }

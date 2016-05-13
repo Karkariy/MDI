@@ -36,6 +36,9 @@ import Strategy.EContexte;
 
 import Builder.DisplacementBuilder;
 
+import Visitor.VisitorM1;
+import Visitor.VisitorM2;
+
 import java.io.IOException;
 import jchess.JChessApp;
 import jchess.core.moves.Moves;
@@ -77,6 +80,8 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 	 * Currently active player object
 	 */
 	protected Player activePlayer;
+	protected VisitorM1 visitor1;
+	protected VisitorM2 visitor2;
 
 	/**
 	 * Game clock object
@@ -132,7 +137,11 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 		chessboard = new Chessboard(this.getSettings(),new EContexte(new ChessboardDefaultStrategy(), 
 				getSettings().getPlayerWhite(),getSettings().getPlayerBlack()),
 				this.moves);
+		
 		displacement = new DisplacementBuilder(chessboard);
+		visitor1 = new VisitorM1(chessboard);
+		visitor2 = new VisitorM2(chessboard);
+		
 		
 		ChessboardView chessboardView = chessboard.getChessboardView();
 		int chessboardWidth = chessboardView.getChessboardWidht(true);
@@ -153,10 +162,6 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 		this.setDoubleBuffered(true);
 		chessboardView.addMouseListener(this);
 		this.addComponentListener(this);
-
-
-
-
 	}
 
 	/** Method to save actual state of game
@@ -377,6 +382,14 @@ public class Game extends JPanel implements ComponentListener, MouseListener
 	 */
 	public void nextMove()
 	{
+		/* Design Pattern Visitor */
+		// visitor1.visit(activePlayer);
+		// visitor1.print();
+		
+		visitor2.visit(activePlayer);
+		visitor2.print();
+		
+		
 		switchActive();
 
 		LOG.debug("next move, active player: " + activePlayer.getName() + 

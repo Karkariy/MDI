@@ -45,11 +45,10 @@ public class King extends Piece
 
     protected boolean wasMotioned = false;
     
-    protected static final short value = 99;
-
     public King(Chessboard chessboard, Player player)
     {
         super(chessboard, player);
+        this.value = 99;
         this.symbol = "K";
         this.addBehavior(new KingBehavior(this));
     }
