@@ -30,7 +30,6 @@ import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import org.apache.log4j.Logger;
 
-import Strategy.ChessBoardRandStrategy;
 import Strategy.ChessboardDefaultStrategy;
 import Strategy.EContexte;
 
@@ -111,16 +110,12 @@ public class Game extends JPanel implements ComponentListener, MouseListener
         this.setLayout(null);
         this.moves = new Moves(this);
         settings = new Settings();
-        chessboard = new Chessboard(this.getSettings(),new EContexte(new ChessBoardRandStrategy(), 
+        chessboard = new Chessboard(this.getSettings(),new EContexte(new ChessboardDefaultStrategy(), 
         						    getSettings().getPlayerWhite(),getSettings().getPlayerBlack()),
         							this.moves);
         
 
-        
-        ChessboardView chessboardView = chessboard.getChessboardView();
-        int chessboardWidth = chessboardView.getChessboardWidht(true);
-        this.add(chessboardView);
-        
+
         
         //this.chessboard.
         gameClock = new GameClock(this);
@@ -133,7 +128,11 @@ public class Game extends JPanel implements ComponentListener, MouseListener
         Moves.setLocation(new Point(500, 121));
         this.add(Moves);
 
-
+        
+        ChessboardView chessboardView = chessboard.getChessboardView();
+        int chessboardWidth = chessboardView.getChessboardWidht(true);
+        this.add(chessboardView);
+        
         this.tabPane = new JTabbedPane();
         this.localSettingsView = new LocalSettingsView(this);
         //this.tabPane.addTab(Settings.lang("game_chat"), this.chat);

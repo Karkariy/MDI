@@ -34,11 +34,7 @@ public class ChessboardDefaultStrategy extends Strategy {
 
 	private void setFigures4NewGame(Chessboard chessboard,int i, Player player) {
 		int posPawn =0;
-		if (i != 0 && i != 7)
-		{
-			return;
-		}
-		else if (i == 0)
+		if (i == 0)
 		{
 			player.goDown = true;
 		}
@@ -47,7 +43,7 @@ public class ChessboardDefaultStrategy extends Strategy {
 		chessboard.getSquare(0, i).setPiece(chessboard.getPieceFactory().createPiece(PieceType.Rook, player));
 		chessboard.getSquare(7, i).setPiece(chessboard.getPieceFactory().createPiece(PieceType.Rook, player));
 		chessboard.getSquare(1, i).setPiece(chessboard.getPieceFactory().createPiece(PieceType.Knight, player));
-		chessboard.getSquare(6, i).setPiece(chessboard.getPieceFactory().createPiece(PieceType.Knight, player));       
+		chessboard.getSquare(4, 4).setPiece(chessboard.getPieceFactory().createPiece(PieceType.Knight, player));       
 		chessboard.getSquare(2, i).setPiece(chessboard.getPieceFactory().createPiece(PieceType.Bishop, player));
 		chessboard.getSquare(5, i).setPiece(chessboard.getPieceFactory().createPiece(PieceType.Bishop, player));
 		chessboard.getSquare(3, i).setPiece(chessboard.getPieceFactory().createPiece(PieceType.Queen, player));
