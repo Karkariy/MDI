@@ -10,6 +10,7 @@ import jchess.core.pieces.PieceType;
 import jchess.core.pieces.implementation.King;
 
 public class ChessboardRandStrategy extends ChessboardDefaultStrategy {
+	ArrayList<Integer> rand = new ArrayList<>();
 
 	public ChessboardRandStrategy() {
 		super();
@@ -22,60 +23,71 @@ public class ChessboardRandStrategy extends ChessboardDefaultStrategy {
 
 	protected void setFigures4NewGame(Chessboard chessboard,int i, Player player) {
 		King king;
-		do {
 
-			int posPawn =0;
-			if (i == 0)
-			{
-				player.goDown = true;
-			}
 
-			Random randomGenerator = new Random();
-			ArrayList<Integer> rand = new ArrayList<>();
-			int tmpX, tmpY;
-			/*New : Creation of the Pieces with Factory Pattern */
-			for(int k = 2 ; k < 8 ;++k) {
-				do{
-					tmpX = randomGenerator.nextInt(7);
-					tmpY = randomGenerator.nextInt(7);
-				}while(contain(rand,tmpX,tmpY));
-				rand.add(tmpX);
-				rand.add(tmpY);
-				chessboard.getSquare(tmpX, tmpY).setPiece(chessboard.getPieceFactory().createPiece(intToEnumType(k/2), player));
-			}
+		int posPawn =0;
+		if (i == 0)
+		{
+			player.goDown = true;
+		}
 
-			for(int k = 0 ; k < 9 ;++k) {
-				do{
-					tmpX = randomGenerator.nextInt(7);
-					tmpY = randomGenerator.nextInt(7);
-				}while(contain(rand,tmpX,tmpY));
-				rand.add(tmpX);
-				rand.add(tmpY);
-				chessboard.getSquare(tmpX, tmpY).setPiece(chessboard.getPieceFactory().createPiece(intToEnumType(0), player));
-			}
-
+		Random randomGenerator = new Random();
+		int tmpX, tmpY;
+		/*New : Creation of the Pieces with Factory Pattern */
+		for(int k = 2 ; k < 8 ;++k) {
 			do{
 				tmpX = randomGenerator.nextInt(7);
 				tmpY = randomGenerator.nextInt(7);
 			}while(contain(rand,tmpX,tmpY));
 			rand.add(tmpX);
 			rand.add(tmpY);
-			chessboard.getSquare(tmpX, tmpY).setPiece(chessboard.getPieceFactory().createPiece(PieceType.Queen, player));
+			chessboard.getSquare(tmpX, tmpY).setPiece(chessboard.getPieceFactory().createPiece(intToEnumType(k/2), player));
+		}
+
+		for(int k = 0 ; k < 9 ;++k) {
+			do{
+				tmpX = randomGenerator.nextInt(7);
+				tmpY = randomGenerator.nextInt(7);
+			}while(contain(rand,tmpX,tmpY));
+			rand.add(tmpX);
+			rand.add(tmpY);
+			chessboard.getSquare(tmpX, tmpY).setPiece(chessboard.getPieceFactory().createPiece(intToEnumType(0), player));
+		}
+
+		do{
+			tmpX = randomGenerator.nextInt(7);
+			tmpY = randomGenerator.nextInt(7);
+		}while(contain(rand,tmpX,tmpY));
+		rand.add(tmpX);
+		rand.add(tmpY);
+		chessboard.getSquare(tmpX, tmpY).setPiece(chessboard.getPieceFactory().createPiece(PieceType.Queen, player));
 
 
-			if (player.getColor() == Colors.WHITE)
-			{
-				king = (King)chessboard.getPieceFactory().createPiece(PieceType.King, player);
-				chessboard.setKingWhite(king);
-				chessboard.getSquare(4, i).setPiece(chessboard.getKingWhite());
-			}
-			else
-			{
-				king = (King)chessboard.getPieceFactory().createPiece(PieceType.King, player);
-				chessboard.setKingBlack(king);
-				chessboard.getSquare(4, i).setPiece(chessboard.getKingBlack());
-			}
-		}while(!king.isSafe());
+		if (player.getColor() == Colors.WHITE)
+		{
+			king = (King)chessboard.getPieceFactory().createPiece(PieceType.King, player);
+			chessboard.setKingWhite(king);
+			do{
+				tmpX = randomGenerator.nextInt(7);
+				tmpY = randomGenerator.nextInt(7);
+			}while(contain(rand,tmpX,tmpY));
+			rand.add(tmpX);
+			rand.add(tmpY);
+			chessboard.getSquare(tmpX, tmpY).setPiece(chessboard.getKingWhite());
+		}
+		else
+		{
+			king = (King)chessboard.getPieceFactory().createPiece(PieceType.King, player);
+			chessboard.setKingBlack(king);
+			do{
+				tmpX = randomGenerator.nextInt(7);
+				tmpY = randomGenerator.nextInt(7);
+			}while(contain(rand,tmpX,tmpY));
+			rand.add(tmpX);
+			rand.add(tmpY);
+			chessboard.getSquare(tmpX, tmpY).setPiece(chessboard.getKingBlack());
+		}
+
 	}
 
 	private boolean contain(ArrayList<Integer> rand, int x ,int y) {
