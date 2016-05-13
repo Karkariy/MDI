@@ -40,7 +40,7 @@ public class Player implements Serializable
     
     protected playerTypes playerType;
     
-    protected boolean goDown;
+    public boolean goDown;
 
     /**
      * Empty constructor.

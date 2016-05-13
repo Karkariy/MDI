@@ -260,7 +260,7 @@ public class Chessboard2D extends ChessboardView
         };
         if (!getChessboard().getSettings().isUpsideDown())
         {
-            for (int i = 1; i <= getChessboard().getChessBordSizeN(); i++)
+            for (int i = 1; i <= getChessboard().getChessBordSizeH(); i++)
             {
                 uDL2D.drawString(letters[i - 1], (squareHeight * (i - 1)) + addX, 10 + (labelHeight / 3));
             }
@@ -268,7 +268,7 @@ public class Chessboard2D extends ChessboardView
         else
         {
             int j = 1;
-            for (int i = getChessboard().getChessBordSizeN(); i > 0; i--, j++)
+            for (int i = getChessboard().getChessBordSizeH(); i > 0; i--, j++)
             {
                 uDL2D.drawString(letters[i - 1], (squareHeight * (j - 1)) + addX, 10 + (labelHeight / 3));
             }
@@ -295,7 +295,7 @@ public class Chessboard2D extends ChessboardView
         else
         {
             int j = 1;
-            for (int i = getChessboard().getChessBordSizeM(); i > 0; i--, j++)
+            for (int i = getChessboard().getChessBordSizeW(); i > 0; i--, j++)
             {
                 uDL2D.drawString(new Integer(i).toString(), 3 + (labelHeight / 3), (squareHeight * (j - 1)) + addX);
             }
@@ -354,9 +354,9 @@ public class Chessboard2D extends ChessboardView
 
     private void drawPieces(Square[][] squares, Graphics2D g2d)
     {
-        for (int i = 0; i < getChessboard().getChessBordSizeM(); i++) //drawPiecesOnSquares
+        for (int i = 0; i < getChessboard().getChessBordSizeW(); i++) //drawPiecesOnSquares
         {
-            for (int y = 0; y < getChessboard().getChessBordSizeN(); y++)
+            for (int y = 0; y < getChessboard().getChessBordSizeH(); y++)
             {
                 if (squares[i][y].getPiece() != null)
                 {

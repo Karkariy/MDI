@@ -102,14 +102,14 @@ public class KingBehavior extends Behavior
                     }
                 }
             }
-            if (king.getChessboard().getSquares()[7][king.getSquare().getPozY()].getPiece() != null
-                    && king.getChessboard().getSquares()[7][king.getSquare().getPozY()].getPiece().getName().equals("Rook"))
+            if (king.getChessboard().getSquares()[king.getChessboard().getChessBordSizeH()-1][king.getSquare().getPozY()].getPiece() != null
+                    && king.getChessboard().getSquares()[king.getChessboard().getChessBordSizeH()-1][king.getSquare().getPozY()].getPiece().getName().equals("Rook"))
             {
                 boolean canCastling = true;
-                Rook rook = (Rook) king.getChessboard().getSquares()[7][king.getSquare().getPozY()].getPiece();
+                Rook rook = (Rook) king.getChessboard().getSquares()[king.getChessboard().getChessBordSizeH()-1][king.getSquare().getPozY()].getPiece();
                 if (!rook.getWasMotioned()) //if king was not moves before and is not checked
                 {
-                    for (int i = king.getSquare().getPozX() + 1; i < 7; i++) //go right
+                    for (int i = king.getSquare().getPozX() + 1; i < king.getChessboard().getChessBordSizeW(); i++) //go right
                     {
                         if (king.getChessboard().getSquares()[i][king.getSquare().getPozY()].getPiece() != null) //if square is not empty
                         {

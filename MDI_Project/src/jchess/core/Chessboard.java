@@ -19,7 +19,9 @@
 package jchess.core;
 
 import Factory.*;
-import Builder.*;
+import Strategy.ChessboardDefaultStrategy;
+import Strategy.EContexte;
+//import Builder.*;
 import jchess.core.pieces.Piece;
 import jchess.core.pieces.PieceType;
 import jchess.core.pieces.implementation.King;
@@ -45,7 +47,7 @@ import org.apache.log4j.*;
  * It is setting the squers of chessboard and sets the pieces(pawns)
  * witch the owner is current player on it.
  */
-public class Chessboard implements Builder
+public class Chessboard //implements Builder
 {
     private static final Logger LOG = Logger.getLogger(Chessboard.class);
     
@@ -56,7 +58,7 @@ public class Chessboard implements Builder
     /*
      * squares of chessboard
      */
-    protected Square squares[][];
+    private Square squares[][];
 
     private Set<Square> moves;
     
@@ -68,9 +70,7 @@ public class Chessboard implements Builder
     
     protected King kingBlack;
     
-    private int chessBordSizeM = 8;
 
-	private int chessBordSizeN = 8;
     
     //For En passant:
     //|-> Pawn whose in last turn moved two square
@@ -82,7 +82,9 @@ public class Chessboard implements Builder
     
     protected int activeSquareX;
     
-    protected int activeSquareY;      
+    protected int activeSquareY;   
+    
+    protected EContexte contexte;
     
     /**
      * chessboard view data object
@@ -94,30 +96,23 @@ public class Chessboard implements Builder
      * @param settings reference to Settings class object for this chessboard
      * @param moves_history reference to Moves class object for this chessboard 
      */
-    public Chessboard(Settings settings, Moves Moves)
+    public Chessboard(Settings settings,EContexte contexte, Moves Moves)
     {
     	
-    	
-    	
         this.settings = settings;
-        this.chessboardView = new Chessboard2D(this);
+       
 
         this.activeSquareX = 0;
         this.activeSquareY = 0;
-        
-        this.squares = new Square[8][8];//initalization of 8x8 chessboard
-
-        for (int i = 0; i < 8; i++) //create object for each square
-        {
-            for (int y = 0; y < 8; y++)
-            {
-                this.squares[i][y] = new Square(i, y, null);
-            }
-        }//--endOf--create object for each square
+//--endOf--create object for each square
         this.Moves = Moves;
         
         this.setPieceFactory(new ConcreteFactory(this));
-
+        
+        this.contexte = contexte ;
+    	this.contexte.executeStrategy(this);
+    	this.chessboardView = new Chessboard2D(this);
+       
     }/*--endOf-Chessboard--*/
 
     /**
@@ -145,7 +140,7 @@ public class Chessboard implements Builder
 
         if (places.equals("")) //if newGame
         {
-            this.setPieces4NewGame(plWhite, plBlack);
+        	
         } 
         else //if loadedGame
         {
@@ -154,78 +149,12 @@ public class Chessboard implements Builder
     }/*--endOf-setPieces--*/
 
 
-    /**
-     *
-     */
-    private void setPieces4NewGame(Player plWhite, Player plBlack)
-    {
-        /* WHITE PIECES */
-        Player player = plBlack;
-        Player player1 = plWhite;
-        this.setFigures4NewGame(0, player);
-        this.setPawns4NewGame(1, player);
-        this.setFigures4NewGame(7, player1);
-        this.setPawns4NewGame(6, player1);
-    }/*--endOf-setPieces(boolean upsideDown)--*/
-
-
-    /**  
-     *  Method to set Figures in row (and set Queen and King to right position)
-     *  @param i row where to set figures (Rook, Knight etc.)
-     *  @param player which is owner of pawns
-     *  @param upsideDown if true white pieces will be on top of chessboard
-     * */
-    private void setFigures4NewGame(int i, Player player)
-    {
-        if (i != 0 && i != 7)
-        {
-            LOG.error("error setting figures like rook etc.");
-            return;
-        }
-        else if (i == 0)
-        {
-            player.goDown = true;
-        }
-
-        /*New : Creation of the Pieces with Factory Pattern */
-        this.getSquare(0, i).setPiece(getPieceFactory().createPiece(PieceType.Rook, player));
-        this.getSquare(7, i).setPiece(getPieceFactory().createPiece(PieceType.Rook, player));
-        this.getSquare(1, i).setPiece(getPieceFactory().createPiece(PieceType.Knight, player));
-        this.getSquare(6, i).setPiece(getPieceFactory().createPiece(PieceType.Knight, player));       
-        this.getSquare(2, i).setPiece(getPieceFactory().createPiece(PieceType.Bishop, player));
-        this.getSquare(5, i).setPiece(getPieceFactory().createPiece(PieceType.Bishop, player));
-        this.getSquare(3, i).setPiece(getPieceFactory().createPiece(PieceType.Queen, player));
-
-
-        if (player.getColor() == Colors.WHITE)
-        {
-            kingWhite = (King)getPieceFactory().createPiece(PieceType.King, player);
-            this.getSquare(4, i).setPiece(kingWhite);
-        }
-        else
-        {
-            kingBlack = (King)getPieceFactory().createPiece(PieceType.King, player);
-            this.getSquare(4, i).setPiece(kingBlack);
-        }
-    }
 
     /**  method set Pawns in row
      *  @param i row where to set pawns
      *  @param player player which is owner of pawns
      * */
-    private void setPawns4NewGame(int i, Player player)
-    {
-        if (i != 1 && i != 6)
-        {
-            LOG.error("error setting pawns etc.");
-            return;
-        }
-        for (int x = 0; x < 8; x++)
-        {
-            this.getSquare(x, i).setPiece(getPieceFactory().createPiece(PieceType.Pawn, player));
-        }
-    }
-    
+
     /** Method selecting piece in chessboard
      * @param  sq square to select (when clicked))
      */
@@ -341,7 +270,7 @@ public class Chessboard implements Builder
             {
                 tempEnd.piece = getSquares()[end.getPozX()][begin.getPozY()].piece; //ugly hack - put taken pawn in en passant plasty do end square
 
-                squares[end.pozX][begin.pozY].piece = null;
+                getSquares()[end.pozX][begin.pozY].piece = null;
                 wasEnPassant = true;
             }
 
@@ -431,7 +360,7 @@ public class Chessboard implements Builder
                     Pawn pawn = (Pawn) this.getSquares()[to.getPozX()][to.getPozY()].piece;
                     pawn.setSquare(null);
 
-                    this.squares[to.pozX][to.pozY].piece = first.getPromotedPiece();
+                    this.getSquares()[to.pozX][to.pozY].piece = first.getPromotedPiece();
                     Piece promoted = this.getSquares()[to.getPozX()][to.getPozY()].piece;
                     promoted.setSquare(this.getSquares()[to.getPozX()][to.getPozY()]);
                 }
@@ -458,7 +387,7 @@ public class Chessboard implements Builder
             try
             {
                 Piece moved = last.getMovedPiece();
-                this.squares[begin.pozX][begin.pozY].piece = moved;
+                this.getSquares()[begin.pozX][begin.pozY].piece = moved;
 
                 moved.setSquare(this.getSquares()[begin.getPozX()][begin.getPozY()]);
 
@@ -469,16 +398,16 @@ public class Chessboard implements Builder
                     if (last.getCastlingMove() == Castling.SHORT_CASTLING)
                     {
                         rook = this.getSquares()[end.getPozX() - 1][end.getPozY()].piece;
-                        this.squares[7][begin.pozY].piece = rook;
+                        this.getSquares()[7][begin.pozY].piece = rook;
                         rook.setSquare(this.getSquares()[7][begin.getPozY()]);
-                        this.squares[end.pozX - 1][end.pozY].piece = null;
+                        this.getSquares()[end.pozX - 1][end.pozY].piece = null;
                     }
                     else
                     {
                         rook = this.getSquares()[end.getPozX() + 1][end.getPozY()].piece;
-                        this.squares[0][begin.pozY].piece = rook;
+                        this.getSquares()[0][begin.pozY].piece = rook;
                         rook.setSquare(this.getSquares()[0][begin.getPozY()]);
-                        this.squares[end.pozX + 1][end.pozY].piece = null;
+                        this.getSquares()[end.pozX + 1][end.pozY].piece = null;
                     }
                     ((King) moved).setWasMotioned(false);
                     ((Rook) rook).setWasMotioned(false);
@@ -490,7 +419,7 @@ public class Chessboard implements Builder
                 else if (moved.getName().equals("Pawn") && last.wasEnPassant())
                 {
                     Pawn pawn = (Pawn) last.getTakenPiece();
-                    this.squares[end.pozX][begin.pozY].piece = pawn;
+                    this.getSquares()[end.pozX][begin.pozY].piece = pawn;
                     pawn.setSquare(this.getSquares()[end.getPozX()][begin.getPozY()]);
 
                 }
@@ -498,7 +427,7 @@ public class Chessboard implements Builder
                 {
                     Piece promoted = this.getSquares()[end.getPozX()][end.getPozY()].piece;
                     promoted.setSquare(null);
-                    this.squares[end.pozX][end.pozY].piece = null;
+                    this.getSquares()[end.pozX][end.pozY].piece = null;
                 }
 
                 //check one more move back for en passant
@@ -514,12 +443,12 @@ public class Chessboard implements Builder
 
                 if (taken != null && !last.wasEnPassant())
                 {
-                    this.squares[end.pozX][end.pozY].piece = taken;
+                    this.getSquares()[end.pozX][end.pozY].piece = taken;
                     taken.setSquare(this.getSquares()[end.getPozX()][end.getPozY()]);
                 }
                 else
                 {
-                    this.squares[end.pozX][end.pozY].piece = null;
+                    this.getSquares()[end.pozX][end.pozY].piece = null;
                 }
 
                 if (refresh)
@@ -570,7 +499,7 @@ public class Chessboard implements Builder
     {
         try 
         {
-            return squares[x][y];
+            return getSquares()[x][y];
         } 
         catch(ArrayIndexOutOfBoundsException exc) 
         {
@@ -589,11 +518,11 @@ public class Chessboard implements Builder
     public ArrayList<Piece> getAllPieces(Colors color)
     {
         ArrayList<Piece> result = new ArrayList<>();
-        for(int i=0; i<squares.length; i++)
+        for(int i=0; i<getSquares().length; i++)
         {
-            for(int j=0; j<squares[i].length; j++)
+            for(int j=0; j<getSquares()[i].length; j++)
             {
-                Square sq = squares[i][j];
+                Square sq = getSquares()[i][j];
                 if(null != sq.getPiece() && ( sq.getPiece().getPlayer().color == color || color == null) )
                 {
                     result.add(sq.getPiece());
@@ -735,20 +664,19 @@ public class Chessboard implements Builder
 		this.pieceFactory = pieceFactory;
 	}
 
-	public int getChessBordSizeM() {
-		return chessBordSizeM;
+	public int getChessBordSizeH() {
+		return contexte.getChessBordSizeH();
 	}
 
-	public void setChessBordSizeM(int chessBordSizeM) {
-		this.chessBordSizeM = chessBordSizeM;
+	public void setChessBordSizeW(int chessBordSizeW) {
+		contexte.setChessBordSizeW(chessBordSizeW);
 	}
 
-	public int getChessBordSizeN() {
-		return chessBordSizeN;
+	public int getChessBordSizeW() {
+		return contexte.getChessBordSizeH();
 	}
-
-	public void setChessBordSizeN(int chessBordSizeN) {
-		this.chessBordSizeN = chessBordSizeN;
+	public void setChessBordSizeH(int chessBordSizeH) {
+		contexte.setChessBordSizeH(chessBordSizeH);
 	}
 
 	public Chessboard xFrom(int x) {
@@ -770,4 +698,16 @@ public class Chessboard implements Builder
 		
 		return this;
 	}
+
+	public void setKingWhite(King createPiece) {
+		kingWhite = createPiece;
+	}
+	public void setKingBlack(King createPiece) {
+		kingBlack = createPiece;
+	}
+
+	public void setSquares(Square squares[][]) {
+		this.squares = squares;
+	}
+
 }

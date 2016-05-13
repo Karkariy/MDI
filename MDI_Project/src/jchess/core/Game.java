@@ -29,6 +29,11 @@ import java.util.Calendar;
 import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import org.apache.log4j.Logger;
+
+import Strategy.ChessBoardRandStrategy;
+import Strategy.ChessboardDefaultStrategy;
+import Strategy.EContexte;
+
 import java.io.IOException;
 import jchess.JChessApp;
 import jchess.core.moves.Moves;
@@ -106,13 +111,16 @@ public class Game extends JPanel implements ComponentListener, MouseListener
         this.setLayout(null);
         this.moves = new Moves(this);
         settings = new Settings();
-        chessboard = new Chessboard(this.getSettings(), this.moves);
+        chessboard = new Chessboard(this.getSettings(),new EContexte(new ChessBoardRandStrategy(), 
+        						    getSettings().getPlayerWhite(),getSettings().getPlayerBlack()),
+        							this.moves);
         
 
-    
+        
         ChessboardView chessboardView = chessboard.getChessboardView();
         int chessboardWidth = chessboardView.getChessboardWidht(true);
         this.add(chessboardView);
+        
         
         //this.chessboard.
         gameClock = new GameClock(this);

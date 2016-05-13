@@ -5,7 +5,7 @@ import jchess.core.Player;
 import jchess.core.pieces.*;
 import jchess.core.pieces.implementation.*;
 
-public class ConcreteFactory {
+public class ConcreteFactory implements FactoryPiece {
 
 	
 	
