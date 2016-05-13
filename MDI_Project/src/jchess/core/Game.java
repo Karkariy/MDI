@@ -34,6 +34,8 @@ import Strategy.ChessboardDefaultStrategy;
 import Strategy.ChessboardRandStrategy;
 import Strategy.EContexte;
 
+import Builder.DisplacementBuilder;
+
 import java.io.IOException;
 import jchess.JChessApp;
 import jchess.core.moves.Moves;
@@ -70,7 +72,7 @@ public class Game extends JPanel implements ComponentListener, MouseListener
      * chessboard data object
      */    
     protected Chessboard chessboard;
-
+    protected DisplacementBuilder displacement;
     
     /**
      * Currently active player object
@@ -111,10 +113,10 @@ public class Game extends JPanel implements ComponentListener, MouseListener
         this.setLayout(null);
         this.moves = new Moves(this);
         settings = new Settings();
-        chessboard = new Chessboard(this.getSettings(),new EContexte(new ChessboardRandStrategy(), 
+        chessboard = new Chessboard(this.getSettings(),new EContexte(new ChessboardDefaultStrategy(), 
         						    getSettings().getPlayerWhite(),getSettings().getPlayerBlack()),
         							this.moves);
-        
+        displacement = new DisplacementBuilder(chessboard);
 
 
         
@@ -565,7 +567,11 @@ public class Game extends JPanel implements ComponentListener, MouseListener
                     {
                         if (getSettings().getGameType() == Settings.gameTypes.local)
                         {
-                            getChessboard().move(getChessboard().getActiveSquare(), sq);
+                            // getChessboard().move(getChessboard().getActiveSquare(), sq);
+                           
+                        	/* Design Pattern Builder Displacements */
+                            Square from = getChessboard().getActiveSquare();
+                            displacement.xFrom(from.pozX).yFrom(from.pozY).xTo(sq.pozX).yTo(sq.pozY);
                         }
 
 

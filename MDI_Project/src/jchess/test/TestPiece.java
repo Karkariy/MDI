@@ -15,6 +15,9 @@ import org.jdesktop.application.SingleFrameApplication;
 import org.junit.Before;
 import org.junit.Test;
 
+import Builder.DisplacementBuilder;
+import Builder.DisplaceSquareBuilder;
+
 import java.awt.*;
 
 import static junit.framework.TestCase.assertNotNull;
@@ -27,17 +30,20 @@ import static org.junit.Assert.assertTrue;
  */
 public class TestPiece {
 
-    private  Settings settings;
+    private Settings settings;
 
-    private  Chessboard board;
-
+    private Chessboard board;
+    private DisplacementBuilder displacement;
+    private DisplaceSquareBuilder displaceSquare;
+    
     @Before
     public void setUp() {
         //SingleFrameApplication.launch(JChessApp.class, new String[] {});
 
         settings = new Settings();
         board = new Game().getChessboard(); // new Chessboard(settings, new Moves(new Game()));
-
+        displacement = new DisplacementBuilder(board);
+        displaceSquare = new DisplaceSquareBuilder(board);
 
         // Game g = new Game();
         // #1 bad API design
@@ -84,9 +90,12 @@ public class TestPiece {
 
 
         assertNull(board.getSquare(4, 4).getPiece()); // nothing there
+        
         // e2 (4, 6) e4 (4, 4)
-        board.move(4, 6, 4, 4);
-
+        // board.move(4, 6, 4, 4);
+        // displacement.xFrom(4).yFrom(6).xTo(4).yTo(4);
+        displaceSquare.from("e2").to("e4");
+        
         // #4 bad API design
         //assertEquals(1, board.getMoves().size());
 
@@ -99,11 +108,17 @@ public class TestPiece {
     @Test
     public void testBishop1() throws Exception {
         // e2 (4, 6) e4 (5, 4)
-        board.move(4, 6, 4, 4);
-
+        // board.move(4, 6, 4, 4);
+        
+    	// displacement.xFrom(4).yFrom(6).xTo(4).yTo(4);
+        displaceSquare.from("e2").to("e4");
+        
         // e7 (4, 1) e5 (4, 3)
-        board.move(4, 1, 4, 3);
-
+        // board.move(4, 1, 4, 3);
+        
+        // displacement.xFrom(4).yFrom(1).xTo(4).yTo(3);
+        displaceSquare.from("e7").to("e5");
+        
 
         assertNull(board.getSquare(4, 1).getPiece()); // now the pawn is not present in e7
         Piece p1 = board.getSquare(4, 3).getPiece(); // and there is a pawn in e5
@@ -121,11 +136,17 @@ public class TestPiece {
     @Test
     public void testBishop2() throws Exception {
         // d2 (3, 6) d4 (3, 4)
-        board.move(3, 6, 3, 4);
-
+        // board.move(3, 6, 3, 4);
+    	
+    	// displacement.xFrom(3).yFrom(6).xTo(3).yTo(4);
+    	displaceSquare.from("d2").to("d4");
+        
         // e7 (4, 1) e5 (4, 3)
-        board.move(4, 1, 4, 3);
-
+        // board.move(4, 1, 4, 3);
+    	
+    	// displacement.xFrom(4).yFrom(1).xTo(4).yTo(3);
+    	displaceSquare.from("e7").to("e5");
+        
         // bishop in c1
         Piece b1 = board.getSquare(2, 7).getPiece();
         assertTrue(b1 instanceof Bishop);
@@ -137,17 +158,29 @@ public class TestPiece {
     @Test
     public void testKing() throws Exception {
     	// d2 (3, 6) d4 (3, 4)
-        board.move(3, 6, 3, 4);
-    	
+    	// board.move(3, 6, 3, 4);
+
+    	// displacement.xFrom(3).yFrom(6).xTo(3).yTo(4);
+        displaceSquare.from("d2").to("d4");
+        
         // c7 (2, 1) c5 (4, 3)
-        board.move(2, 1, 2, 3);
+        // board.move(2, 1, 2, 3);
+
+    	// displacement.xFrom(2).yFrom(1).xTo(2).yTo(3);
+        displaceSquare.from("c7").to("c5");
         
         // e1 (4, 8) d2 (3, 7)
-        board.move(4, 7, 3, 6);
-    	
+        // board.move(4, 7, 3, 6);
+
+    	// displacement.xFrom(4).yFrom(7).xTo(3).yTo(6);
+        displaceSquare.from("e1").to("d2");
+        
         // d8 (3, 0) a5 (0, 3)
-        board.move(3, 0, 0, 3);
-    	
+        // board.move(3, 0, 0, 3);
+
+    	// displacement.xFrom(3).yFrom(0).xTo(0).yTo(3);
+        displaceSquare.from("d8").to("a5");
+        
         // king in d2
         Piece k1 = board.getSquare(3, 6).getPiece();
         assertTrue(k1 instanceof King);
